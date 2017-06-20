@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::Draw(Graphics & gfx, int size, Board::Type(&grid)[30][40])
+void Player::Draw(Graphics & gfx, int size, Board::Type(&grid)[60][80])
 {
 	if (grid[y][x] == Board::Type::filled)
 	{
@@ -55,7 +55,7 @@ void Player::UserInput(Keyboard & kbd)
 
 void Player::ClampScreen()
 {
-	int size = 20;
+	int size = 10;
 	if (x < 0)
 	{
 		x = 0;

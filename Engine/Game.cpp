@@ -125,15 +125,14 @@ void Game::UpdateModel()
 
 void Game::NewEnemy()
 {
-	std::uniform_int_distribution<int>xDist(20, 700);
-	std::uniform_int_distribution<int>yDist(20, 500);
-	std::uniform_int_distribution<int>xVelDist(2, 4);
-	std::uniform_int_distribution<int>yVelDist(2, 4);
+	std::uniform_int_distribution<int>xDist(100, 600);
+	std::uniform_int_distribution<int>yDist(100, 450);
+	std::uniform_int_distribution<int>xVelDist(1, 3);
+	std::uniform_int_distribution<int>yVelDist(1, 3);
 	int startX = xDist(rng);
 	int startY = yDist(rng);
 	int xVel = xVelDist(rng);
 	int yVel = yVelDist(rng);
-//	enemy.emplace_back<Enemy>(Enemy{ startX, startY, xVel, yVel });
 	enemy.push_back(Enemy(startX, startY, xVel, yVel));
 }
 

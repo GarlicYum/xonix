@@ -1,9 +1,9 @@
 #include "Enemy.h"
 
-void Enemy::Move(Board::Type(&grid)[30][40], int tileSize)
+void Enemy::Move(Board::Type(&grid)[60][80], int tileSize)
 {
 	x += vx;
-	const int right = x + tileSize;
+	const int right = x + size;
 	if (grid[y / tileSize][x / tileSize] == Board::Type::filled ||
 		grid[y / tileSize][right / tileSize] == Board::Type::filled)
 	{

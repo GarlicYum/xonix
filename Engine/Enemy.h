@@ -14,7 +14,7 @@ public:
 		vy(vy_in)
 	{}
 	Enemy() = default;
-	void Move(Board::Type(&grid)[30][40], int tileSize);
+	void Move(Board::Type(&grid)[60][80], int tileSize);
 	void Draw(Graphics& gfx) const;
 	int GetX() const;
 	int GetY() const;
@@ -25,7 +25,7 @@ private:
 	int vy;
 	int vx;
 	static constexpr int padding = 2;
-	static constexpr int size = 10;
+	static constexpr int size = 5;
 	Color edgeColor = Color(195, 195, 195);
 	Color bodyColor = Color(0, 170, 169);
 };
