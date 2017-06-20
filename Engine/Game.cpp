@@ -55,7 +55,7 @@ void Game::UpdateModel()
 		//if player collides with outside enemy
 		if (Collides(tileSize))
 		{
-			failSound.Play();
+		//	failSound.Play();
 			state = gameOver;
 		}
 
@@ -69,7 +69,7 @@ void Game::UpdateModel()
 			//player dies if he collides with his tail
 			if (brd.grid[y][x] == brd.tail)
 			{
-				failSound.Play();
+			//	failSound.Play();
 				state = gameOver;
 				counter = 0.0f;
 			}
@@ -114,7 +114,7 @@ void Game::UpdateModel()
 			{
 				state = gameOver;
 				counter = 0.0f;
-				failSound.Play();
+		//		failSound.Play();
 				break;
 			}
 		}
@@ -123,7 +123,7 @@ void Game::UpdateModel()
 		{
 			counter = 0.0f;
 			state = newLevel;
-			clearSound.Play();
+	//		clearSound.Play();
 		}
 
 		break;

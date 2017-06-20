@@ -43,6 +43,6 @@ void OutsideEnemy::Reset()
 {
 	y = 0.0f;
 	x = 450.0f;
-	vy = 4.0f;
-	vx = 4.0f;
+	vy = 240.0f;
+	vx = 240.0f;
 }
