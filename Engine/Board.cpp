@@ -83,7 +83,7 @@ void Board::Collapse()
 	}
 }
 
-bool Board::GameOver(int y, int x)
+bool Board::GameOver(int y, int x) const
 {
 	if (grid[y / tileSize][x / tileSize] == tail)
 	{

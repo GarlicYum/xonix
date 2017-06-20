@@ -14,7 +14,8 @@ public:
 	int GetTileSize() const;
 	void Drop(int y, int x);
 	void Collapse();
-	bool GameOver(int y, int x);
+	bool GameOver(int y, int x) const;
+	bool NewGame() const;
 
 private:
 	static constexpr int tileSize = 20;
