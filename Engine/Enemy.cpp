@@ -22,7 +22,8 @@ void Enemy::Move(Board::Type(&grid)[30][40], int tileSize)
 
 void Enemy::Draw(Graphics & gfx) const
 {
-	gfx.DrawCircle(x, y, size, Colors::White);
+	gfx.DrawCircle(x, y, size, edgeColor);
+	gfx.DrawCircle(x, y, size - padding, bodyColor);
 }
 
 int Enemy::GetX() const

@@ -3,11 +3,12 @@
 #include "Player.h"
 #include "Graphics.h"
 #include "Keyboard.h"
+#include "Board.h"
 
 class Player
 {
 public:
-	void Draw(Graphics& gfx, int size);
+	void Draw(Graphics& gfx, int size, Board::Type(&grid)[30][40]);
 	void Update();
 	void UserInput(Keyboard& kbd);
 	void ClampScreen();
@@ -20,4 +21,7 @@ private:
 	int y = 0;
 	int vx = 0;
 	int vy = 0;
+	static constexpr int padding = 4;
+	Color edgeColor = Color(168, 0, 171);
+	Color bodyColor = Color(195, 195, 195);
 };

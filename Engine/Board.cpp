@@ -26,11 +26,11 @@ void Board::Draw(Graphics & gfx) const
 			}
 			else if (grid[i][j] == filled)
 			{
-				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, Colors::Green);
+				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, fillColor);
 			}
 			else if (grid[i][j] == tail)
 			{
-				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, Colors::Magenta);
+				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, tailColor);
 			}
 		}
 	}

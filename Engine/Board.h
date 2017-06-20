@@ -24,6 +24,8 @@ private:
 	static constexpr int height = 30;
 	bool levelComplete = false;
 	static constexpr int emptyLeft2Win = 400;
+	Color fillColor = Color(0, 170, 169);
+	Color tailColor = Color(168, 0, 171);
 public:
 	Type grid[height][width] = { empty };
 };

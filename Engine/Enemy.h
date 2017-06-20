@@ -24,5 +24,8 @@ private:
 	int x;
 	int vy;
 	int vx;
+	static constexpr int padding = 2;
 	static constexpr int size = 10;
+	Color edgeColor = Color(195, 195, 195);
+	Color bodyColor = Color(0, 170, 169);
 };

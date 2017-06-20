@@ -5170,7 +5170,7 @@ void Game::ComposeFrame()
 		enemy[i].Draw(gfx);
 	}
 
-	player.Draw(gfx, tileSize);
+	player.Draw(gfx, tileSize, brd.grid);
 	if (state == gameOver)
 	{
 		DrawGameOver(200, 250);

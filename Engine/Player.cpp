@@ -1,8 +1,20 @@
 #include "Player.h"
 
-void Player::Draw(Graphics & gfx, int size)
+void Player::Draw(Graphics & gfx, int size, Board::Type(&grid)[30][40])
 {
-	gfx.DrawRect(x * size, y * size, size, size, Colors::Red);
+	if (grid[y][x] == Board::Type::filled)
+	{
+		gfx.DrawRect(x * size, y * size, size, size, edgeColor);
+		gfx.DrawRect((x * size) + padding, (y * size) + padding, size - (padding * 2),
+			size - (padding * 2), bodyColor);
+	}
+	else
+	{
+		gfx.DrawRect(x * size, y * size, size, size, bodyColor);
+		gfx.DrawRect((x * size) + padding, (y * size) + padding, size - (padding * 2),
+			size - (padding * 2), edgeColor);
+	}
+	
 }
 
 void Player::Update()
