@@ -27,6 +27,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Board.h"
+#include <vector>
 
 class Game
 {
@@ -52,7 +53,8 @@ private:
 	static constexpr float delay = 0.07f;
 	FrameTimer ft;
 	bool game = true;
-	Enemy enemy;
+	std::vector<Enemy> enemy;
+	int enemyCount = 1;
 	Player player;
 	Board brd;
 	/********************************/

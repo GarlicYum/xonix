@@ -24,3 +24,13 @@ void Enemy::Draw(Graphics & gfx, int size) const
 {
 	gfx.DrawRect(x, y, size, size, Colors::White);
 }
+
+int Enemy::GetX() const
+{
+	return x;
+}
+
+int Enemy::GetY() const
+{
+	return y;
+}

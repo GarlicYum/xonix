@@ -26,6 +26,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
+	enemy.push_back(Enemy(300, 300, 4, 4));
 }
 
 void Game::Go()
@@ -64,14 +65,19 @@ void Game::UpdateModel()
 
 		player.UserInput(wnd.kbd);
 		
-		enemy.Move(brd.grid, tileSize);
-
-		if (brd.grid[player.GetY() ][player.GetX()] == brd.filled)
+		for (int i = 0; i < enemyCount; i++)
 		{
-			brd.Drop(enemy.y / tileSize, enemy.x / tileSize);
-			brd.Collapse();
+			enemy[0].Move(brd.grid, tileSize);
+			const int eX = enemy[0].GetX();
+			const int eY = enemy[0].GetY();
+
+			if (brd.grid[player.GetY()][player.GetX()] == brd.filled)
+			{
+				brd.Drop(eY / tileSize, eX / tileSize);
+				brd.Collapse();
+			}
+			game = brd.GameOver(eY, eX);
 		}
-		game = brd.GameOver(enemy.y, enemy.x);
 	}	
 }
 
@@ -80,6 +86,6 @@ void Game::ComposeFrame()
 {
 	const int tileSize = brd.GetTileSize();
 	brd.Draw(gfx);
-	enemy.Draw(gfx, tileSize);
+	enemy[0].Draw(gfx, tileSize);
 	player.Draw(gfx, tileSize);
 }
