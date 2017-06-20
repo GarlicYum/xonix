@@ -86,6 +86,6 @@ void Game::ComposeFrame()
 {
 	const int tileSize = brd.GetTileSize();
 	brd.Draw(gfx);
-	enemy[0].Draw(gfx, tileSize);
+	enemy[0].Draw(gfx);
 	player.Draw(gfx, tileSize);
 }

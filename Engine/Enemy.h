@@ -15,7 +15,7 @@ public:
 	{}
 	Enemy() = default;
 	void Move(Board::Type(&grid)[30][40], int tileSize);
-	void Draw(Graphics& gfx, int size) const;
+	void Draw(Graphics& gfx) const;
 	int GetX() const;
 	int GetY() const;
 
@@ -24,4 +24,5 @@ private:
 	int x;
 	int vy;
 	int vx;
+	static constexpr int size = 10;
 };

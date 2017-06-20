@@ -57,5 +57,10 @@ private:
 	int enemyCount = 1;
 	Player player;
 	Board brd;
+	enum State
+	{
+		playing, gameOver, newGame
+	};
+	State state = playing;
 	/********************************/
 };
