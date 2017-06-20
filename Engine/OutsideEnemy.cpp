@@ -44,7 +44,7 @@ float OutsideEnemy::GetY() const
 void OutsideEnemy::Reset()
 {
 	y = 0.0f;
-	x = 50.0f;
+	x = 450.0f;
 	vy = 240.0f;
 	vx = 240.0f;
 }
