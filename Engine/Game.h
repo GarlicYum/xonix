@@ -56,7 +56,7 @@ private:
 	/*  User Variables              */
 	float counter = 0.0f;
 	static constexpr float delay = 0.05f;
-	static constexpr float pause = 1.0f;
+	static constexpr float pause = 0.75f;
 	FrameTimer ft;
 	std::vector<Enemy> enemy;
 	int enemyCount = 0;

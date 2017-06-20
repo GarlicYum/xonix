@@ -8,6 +8,7 @@ void OutsideEnemy::Move(Board::Type(&grid)[60][80], float dt)
 		grid[int(y) / size][right / size] == Board::Type::empty ||
 		x < 0 || right > Graphics::ScreenWidth)
 	{
+		x -= vx * dt;
 		vx = -vx;
 		x += vx * dt;
 	}
@@ -17,6 +18,7 @@ void OutsideEnemy::Move(Board::Type(&grid)[60][80], float dt)
 		grid[bottom / size][int(x) / size] == Board::Type::empty ||
 		y < 0 || bottom > Graphics::ScreenHeight)
 	{
+		y -= vy * dt;
 		vy = -vy;
 		y += vy * dt;
 	}
@@ -41,8 +43,8 @@ float OutsideEnemy::GetY() const
 
 void OutsideEnemy::Reset()
 {
-	y = 0.0f;
-	x = 450.0f;
+	y = 50.0f;
+	x = 00.0f;
 	vy = 240.0f;
 	vx = 240.0f;
 }
