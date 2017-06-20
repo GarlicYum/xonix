@@ -57,27 +57,24 @@ void Game::UpdateModel()
 		if (counter > delay)
 		{
 			counter = 0;
-			x += vx;
-			y += vy;
+			player.Update();
 
-			ClampScreen();
-
-			if (grid[y][x] == 2)
+			if (grid[player.GetY()][player.GetX()] == 2)
 			{
 				game = false;
 			}
 
-			if (grid[y][x] == 0)
+			if (grid[player.GetY()][player.GetX()] == 0)
 			{
-				grid[y][x] = 2;
+				grid[player.GetY()][player.GetX()] = 2;
 			}
 		}
 
-		UserInput();
+		player.UserInput(wnd.kbd);
 		
 		enemy.Move(grid, tileSize);
 
-		if (grid[y][x] == 1)
+		if (grid[player.GetY() ][player.GetX()] == 1)
 		{
 			Drop(enemy.y / tileSize, enemy.x / tileSize);
 
@@ -102,55 +99,6 @@ void Game::UpdateModel()
 		}
 		
 	}	
-}
-
-void Game::UserInput()
-{
-	while (!wnd.kbd.KeyIsEmpty())
-	{
-		const Keyboard::Event e = wnd.kbd.ReadKey();
-
-		if (e.GetCode() == VK_UP)
-		{
-			vy = -1;
-			vx = 0;
-		}
-		else if (e.GetCode() == VK_DOWN)
-		{
-			vy = 1;
-			vx = 0;
-		}
-		else if (e.GetCode() == VK_LEFT)
-		{
-			vy = 0;
-			vx = -1;
-		}
-		else if (e.GetCode() == VK_RIGHT)
-		{
-			vy = 0;
-			vx = 1;
-		}
-	}
-}
-
-void Game::ClampScreen()
-{
-	if (x < 0)
-	{
-		x = 0;
-	}
-	else if (x + 1 > (gfx.ScreenWidth / tileSize))
-	{
-		x = gfx.ScreenWidth / tileSize - 1;
-	}
-	if (y < 0)
-	{
-		y = 0;
-	}
-	else if (y + 1 > gfx.ScreenHeight / tileSize)
-	{
-		y = (gfx.ScreenHeight / tileSize) - 1;
-	}
 }
 
 
@@ -203,6 +151,6 @@ void Game::ComposeFrame()
 	//DrawEnemy
 	gfx.DrawRect(enemy.x, enemy.y, tileSize, tileSize, Colors::White);
 
-	//DrawSprite
-	gfx.DrawRect(x * tileSize, y * tileSize, tileSize, tileSize, Colors::Red);
+	player.Draw(gfx, tileSize);
+	
 }
