@@ -6,7 +6,7 @@
 class Enemy
 {
 public:
-	Enemy(int x_in, int y_in, int vx_in, int vy_in)
+	Enemy(float x_in, float y_in, float vx_in, float vy_in)
 		:
 		x(x_in),
 		y(y_in),
@@ -14,16 +14,16 @@ public:
 		vy(vy_in)
 	{}
 	Enemy() = default;
-	void Move(Board::Type(&grid)[60][80], int tileSize);
+	void Move(Board::Type(&grid)[60][80], int tileSize, float dt);
 	void Draw(Graphics& gfx) const;
-	int GetX() const;
-	int GetY() const;
+	float GetX() const;
+	float GetY() const;
 
 private:
-	int y;
-	int x;
-	int vy;
-	int vx;
+	float y;
+	float x;
+	float vy;
+	float vx;
 	static constexpr int padding = 2;
 	static constexpr int size = 5;
 	Color edgeColor = Color(195, 195, 195);

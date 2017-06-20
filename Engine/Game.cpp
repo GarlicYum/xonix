@@ -90,18 +90,18 @@ void Game::UpdateModel()
 		//move inside enemies
 		for (int i = 0; i < enemyCount; i++)
 		{
-			enemy[i].Move(brd.grid, tileSize);
+			enemy[i].Move(brd.grid, tileSize, dt);
 		}
 
 		//move outside enemy
-		outEnemy.Move(brd.grid);
+		outEnemy.Move(brd.grid, dt);
 		
 		
 		if (brd.grid[player.GetY()][player.GetX()] == brd.filled)
 		{	
 			for (int i = 0; i < enemyCount; i++)
 			{
-				brd.Drop(enemy[i].GetY() / tileSize, enemy[i].GetX() / tileSize);
+				brd.Drop(int(enemy[i].GetY()) / tileSize, int(enemy[i].GetX()) / tileSize);
 			}
 
 			brd.Collapse();
@@ -110,7 +110,7 @@ void Game::UpdateModel()
 		//player dies if enemy collides with tail
 		for (int i = 0; i < enemyCount; i++)
 		{
-			if (brd.GameOver(enemy[i].GetY(), enemy[i].GetX()))
+			if (brd.GameOver(int(enemy[i].GetY()), int(enemy[i].GetX())))
 			{
 				state = gameOver;
 				counter = 0.0f;
@@ -165,14 +165,14 @@ void Game::UpdateModel()
 
 void Game::NewEnemy()
 {
-	std::uniform_int_distribution<int>xDist(100, 600);
-	std::uniform_int_distribution<int>yDist(100, 450);
-	std::uniform_int_distribution<int>xVelDist(2, 4);
-	std::uniform_int_distribution<int>yVelDist(2, 4);
-	int startX = xDist(rng);
-	int startY = yDist(rng);
-	int xVel = xVelDist(rng);
-	int yVel = yVelDist(rng);
+	std::uniform_real_distribution<float>xDist(100.0f, 600.0f);
+	std::uniform_real_distribution<float>yDist(100.0f, 450.0f);
+	std::uniform_real_distribution<float>xVelDist(120.0f, 240.0f);
+	std::uniform_real_distribution<float>yVelDist(120.0f, 240.0f);
+	float startX = xDist(rng);
+	float startY = yDist(rng);
+	float xVel = xVelDist(rng);
+	float yVel = yVelDist(rng);
 	enemy.push_back(Enemy(startX, startY, xVel, yVel));
 }
 
@@ -5202,10 +5202,10 @@ bool Game::Collides(int ts)
 {
 	const int x = player.GetX();
 	const int y = player.GetY();
-	const int left = outEnemy.GetX() / ts;
-	const int right = (outEnemy.GetX() + ts) / ts;
-	const int top = outEnemy.GetY() / ts;
-	const int bottom = (outEnemy.GetY() + ts) / ts;
+	const int left = int(outEnemy.GetX()) / ts;
+	const int right = (int(outEnemy.GetX()) + ts) / ts;
+	const int top = int(outEnemy.GetY()) / ts;
+	const int bottom = (int(outEnemy.GetY()) + ts) / ts;
 
 	if (left <= (x + 1) && right >= x &&
 		top <= (y + 1) && bottom >= y)

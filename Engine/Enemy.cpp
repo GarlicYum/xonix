@@ -1,37 +1,37 @@
 #include "Enemy.h"
 
-void Enemy::Move(Board::Type(&grid)[60][80], int tileSize)
+void Enemy::Move(Board::Type(&grid)[60][80], int tileSize, float dt)
 {
-	x += vx;
-	const int right = x + size;
-	if (grid[y / tileSize][x / tileSize] == Board::Type::filled ||
-		grid[y / tileSize][right / tileSize] == Board::Type::filled)
+	x += vx * dt;
+	const int right = int(x) + size;
+	if (grid[int(y) / tileSize][int(x) / tileSize] == Board::Type::filled ||
+		grid[int(y) / tileSize][right / tileSize] == Board::Type::filled)
 	{
 		vx = -vx;
-		x += vx;
+		x += vx * dt;
 	}
-	y += vy;
-	const int bottom = y + tileSize;
-	if (grid[y / tileSize][x / tileSize] == Board::Type::filled ||
-		grid[bottom / tileSize][x / tileSize] == Board::Type::filled)
+	y += vy * dt;
+	const int bottom = int(y) + tileSize;
+	if (grid[int(y) / tileSize][int(x) / tileSize] == Board::Type::filled ||
+		grid[bottom / tileSize][int(x) / tileSize] == Board::Type::filled)
 	{
 		vy = -vy;
-		y += vy;
+		y += vy * dt;
 	}
 }
 
 void Enemy::Draw(Graphics & gfx) const
 {
-	gfx.DrawCircle(x, y, size, edgeColor);
-	gfx.DrawCircle(x, y, size - padding, bodyColor);
+	gfx.DrawCircle(int(x), int(y), size, edgeColor);
+	gfx.DrawCircle(int(x), int(y), size - padding, bodyColor);
 }
 
-int Enemy::GetX() const
+float Enemy::GetX() const
 {
 	return x;
 }
 
-int Enemy::GetY() const
+float Enemy::GetY() const
 {
 	return y;
 }
