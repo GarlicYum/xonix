@@ -28,6 +28,7 @@
 #include "Player.h"
 #include "Board.h"
 #include <vector>
+#include <random>
 
 class Game
 {
@@ -42,7 +43,8 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	
+	void NewEnemy();
+	void DrawGameOver(int x, int y);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -52,15 +54,15 @@ private:
 	float counter = 0.0f;
 	static constexpr float delay = 0.07f;
 	FrameTimer ft;
-	bool game = true;
 	std::vector<Enemy> enemy;
-	int enemyCount = 1;
+	int enemyCount = 0;
 	Player player;
 	Board brd;
 	enum State
 	{
-		playing, gameOver, newGame
+		playing, gameOver, newLevel
 	};
-	State state = playing;
+	State state = newLevel;
+	std::mt19937 rng;
 	/********************************/
 };

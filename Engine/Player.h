@@ -13,6 +13,8 @@ public:
 	void ClampScreen();
 	int GetX() const;
 	int GetY() const;
+	void Reset();
+
 private:
 	int x = 0;
 	int y = 0;

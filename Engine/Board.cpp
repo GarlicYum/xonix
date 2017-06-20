@@ -67,6 +67,7 @@ void Board::Drop(int Y, int X)
 
 void Board::Collapse()
 {
+	int numEmpty = 0;
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
@@ -74,6 +75,7 @@ void Board::Collapse()
 			if (grid[i][j] == hidden)
 			{
 				grid[i][j] = empty;
+				numEmpty++;
 			}
 			else
 			{
@@ -81,13 +83,42 @@ void Board::Collapse()
 			}
 		}
 	}
+	if (numEmpty <= emptyLeft2Win)
+	{
+		levelComplete = true;
+	}
 }
 
 bool Board::GameOver(int y, int x) const
 {
 	if (grid[y / tileSize][x / tileSize] == tail)
 	{
-		return false;
+		return true;
 	}
-	return true;
+	return false;
+}
+
+bool Board::LevelComplete() const
+{
+	return levelComplete;
+}
+
+void Board::Reset()
+{
+	levelComplete = false;;
+
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
+			{
+				grid[i][j] = filled;
+			}
+			else
+			{
+				grid[i][j] = empty;
+			}
+		}
+	}
 }

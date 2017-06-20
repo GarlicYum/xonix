@@ -15,12 +15,15 @@ public:
 	void Drop(int y, int x);
 	void Collapse();
 	bool GameOver(int y, int x) const;
-	bool NewGame() const;
+	bool LevelComplete() const;
+	void Reset();
 
 private:
 	static constexpr int tileSize = 20;
 	static constexpr int width = 40;
 	static constexpr int height = 30;
+	bool levelComplete = false;
+	static constexpr int emptyLeft2Win = 400;
 public:
 	Type grid[height][width] = { empty };
 };
