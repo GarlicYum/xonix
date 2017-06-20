@@ -41,31 +41,34 @@ void Game::UpdateModel()
 	if (game)
 	{
 		const float dt = ft.Mark(); // delta time
+		const int tileSize = brd.GetTileSize();
 
 		counter += dt;
 		if (counter > delay)
 		{
 			counter = 0;
 			player.Update();
+			const int y = player.GetY();
+			const int x = player.GetX();
 
-			if (brd.grid[player.GetY()][player.GetX()] == 2)
+			if (brd.grid[y][x] == 2)
 			{
 				game = false;
 			}
 
-			if (brd.grid[player.GetY()][player.GetX()] == 0)
+			if (brd.grid[y][x] == 0)
 			{
-				brd.grid[player.GetY()][player.GetX()] = 2;
+				brd.grid[y][x] = 2;
 			}
 		}
 
 		player.UserInput(wnd.kbd);
 		
-		enemy.Move(brd.grid, brd.GetTileSize());
+		enemy.Move(brd.grid, tileSize);
 
 		if (brd.grid[player.GetY() ][player.GetX()] == 1)
 		{
-			brd.Drop(enemy.y / brd.GetTileSize(), enemy.x / brd.GetTileSize());
+			brd.Drop(enemy.y / tileSize, enemy.x / tileSize);
 			brd.Collapse();
 		}
 		game = brd.GameOver(enemy.y, enemy.x);
