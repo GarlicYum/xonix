@@ -14,7 +14,7 @@ public:
 
 private:
 	float y = 0.0f;
-	float x = 10.0f;
+	float x = 50.0f;
 	float vy = 240.0f;
 	float vx = 240.0f;
 	static constexpr int padding = 3;

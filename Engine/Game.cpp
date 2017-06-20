@@ -5233,13 +5233,5 @@ void Game::ComposeFrame()
 		outEnemy.Draw(gfx);
 
 		break;
-	}
-
-
-
-
-	
-	
-
-	
+	}	
 }
