@@ -23,6 +23,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "FrameTimer.h"
+#include "Enemy.h"
 
 class Game
 {
@@ -31,16 +33,33 @@ public:
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
 	void Go();
+
 private:
 	void ComposeFrame();
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void UserInput();
+	void ClampScreen();
+	void Drop(int X, int Y);
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	static constexpr int width = 40;
+	static constexpr int height = 30;
+	int grid[height][width] = { 0 };
+	static constexpr int tileSize = 20;
+	FrameTimer ft;
+	int x = 0;
+	int y = 0;
+	int vx = 0;
+	int vy = 0;
+	float counter = 0.0f;
+	static constexpr float delay = 0.07f;
+	bool game = true;
+	Enemy enemy;
 	/********************************/
 };
