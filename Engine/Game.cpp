@@ -135,6 +135,7 @@ void Game::UpdateModel()
 			NewEnemy();
 			outEnemy.Reset();
 			enemyCount = 1;
+			wnd.kbd.FlushKey();
 			state = playing;
 		}
 
@@ -150,6 +151,7 @@ void Game::UpdateModel()
 			NewEnemy();
 			enemyCount++;
 			outEnemy.Reset();
+			wnd.kbd.FlushKey();
 			state = playing;
 		}
 		break;
