@@ -90,7 +90,7 @@ int Player::GetY() const
 
 void Player::Reset()
 {
-	x = 0;
+	x = 39;
 	y = 0;
 	vx = 0;
 	vy = 0;

@@ -52,13 +52,6 @@ void Game::UpdateModel()
 
 		player.UserInput(wnd.kbd);
 
-		//if player collides with outside enemy
-		if (Collides(tileSize))
-		{
-		//	failSound.Play();
-			state = gameOver;
-		}
-
 		if (counter > delay)
 		{
 			counter = 0;
@@ -71,7 +64,6 @@ void Game::UpdateModel()
 			{
 			//	failSound.Play();
 				state = gameOver;
-				counter = 0.0f;
 			}
 
 			//creates the tail
@@ -95,7 +87,13 @@ void Game::UpdateModel()
 
 		//move outside enemy
 		outEnemy.Move(brd.grid, dt);
-		
+
+		//if player collides with outside enemy
+		if (Collides(float(tileSize)))
+		{
+			//	failSound.Play();
+			state = gameOver;
+		}
 		
 		if (brd.grid[player.GetY()][player.GetX()] == brd.filled)
 		{	
@@ -113,7 +111,6 @@ void Game::UpdateModel()
 			if (brd.GameOver(int(enemy[i].GetY()), int(enemy[i].GetX())))
 			{
 				state = gameOver;
-				counter = 0.0f;
 		//		failSound.Play();
 				break;
 			}
@@ -129,20 +126,16 @@ void Game::UpdateModel()
 		break;
 
 	case gameOver:
-		counter += dt;
-		if (counter > pause)
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
-			if (wnd.kbd.KeyIsPressed(VK_RETURN))
-			{
-				player.Reset();
-				brd.Reset();
-				counter = 0.0f;
-				enemy.clear();
-				NewEnemy();
-				outEnemy.Reset();
-				enemyCount = 1;
-				state = playing;
-			}
+			player.Reset();
+			brd.Reset();
+			counter = 0.0f;
+			enemy.clear();
+			NewEnemy();
+			outEnemy.Reset();
+			enemyCount = 1;
+			state = playing;
 		}
 
 		break;
@@ -5198,17 +5191,17 @@ void Game::DrawGameOver(int x, int y)
 
 }
 
-bool Game::Collides(int ts)
+bool Game::Collides(float ts)
 {
-	const int x = player.GetX();
-	const int y = player.GetY();
-	const int left = int(outEnemy.GetX()) / ts;
-	const int right = (int(outEnemy.GetX()) + ts) / ts;
-	const int top = int(outEnemy.GetY()) / ts;
-	const int bottom = (int(outEnemy.GetY()) + ts) / ts;
+	const float x = float(player.GetX());
+	const float y = float(player.GetY());
+	const float left = outEnemy.GetX() / ts;
+	const float right = (outEnemy.GetX() + ts) / ts;
+	const float top = outEnemy.GetY() / ts;
+	const float bottom = (outEnemy.GetY() + ts) / ts;
 
-	if (left <= (x + 1) && right >= x &&
-		top <= (y + 1) && bottom >= y)
+	if (left <= (x + 1.0f) && right >= x &&
+		top <= (y + 1.0f) && bottom >= y)
 	{
 		return true;
 	}
@@ -5220,23 +5213,23 @@ void Game::ComposeFrame()
 {
 	const int tileSize = brd.GetTileSize();
 	brd.Draw(gfx);
+	for (int i = 0; i < enemyCount; i++)
+	{
+		enemy[i].Draw(gfx);
+	}
 
 	switch (state)
 	{
 	case gameOver:
-		if (counter > pause)
+		player.Draw(gfx, tileSize, brd.grid);
+		outEnemy.Draw(gfx);
 		DrawGameOver(200, 250);
 
 		break;
 
 	case playing:
-		for (int i = 0; i < enemyCount; i++)
-		{
-			enemy[i].Draw(gfx);
-		}
-
+		
 		player.Draw(gfx, tileSize, brd.grid);
-
 		outEnemy.Draw(gfx);
 
 		break;

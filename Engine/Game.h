@@ -47,7 +47,7 @@ private:
 	/*  User Functions              */
 	void NewEnemy();
 	void DrawGameOver(int x, int y);
-	bool Collides(int ts);
+	bool Collides(float ts);
 	/********************************/
 private:
 	MainWindow& wnd;

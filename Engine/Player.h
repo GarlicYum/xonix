@@ -18,7 +18,7 @@ public:
 	void Stop();
 
 private:
-	int x = 0;
+	int x = 39;
 	int y = 0;
 	int vx = 0;
 	int vy = 0;
