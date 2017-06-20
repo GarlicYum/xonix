@@ -8,7 +8,7 @@ Board::Board()
 		{
 			if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
 			{
-				grid[i][j] = 1;
+				grid[i][j] = filled;
 			}
 		}
 	}
@@ -20,15 +20,15 @@ void Board::Draw(Graphics & gfx) const
 	{
 		for (int j = 0; j < width; j++)
 		{
-			if (grid[i][j] == 0)
+			if (grid[i][j] == empty)
 			{
 				continue;
 			}
-			else if (grid[i][j] == 1)
+			else if (grid[i][j] == filled)
 			{
 				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, Colors::Green);
 			}
-			else if (grid[i][j] == 2)
+			else if (grid[i][j] == tail)
 			{
 				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, Colors::Magenta);
 			}
@@ -43,23 +43,23 @@ int Board::GetTileSize() const
 
 void Board::Drop(int Y, int X)
 {
-	if (grid[Y][X] == 0)
+	if (grid[Y][X] == empty)
 	{
-		grid[Y][X] = -1;
+		grid[Y][X] = hidden;
 	}
-	if (grid[Y - 1][X] == 0)
+	if (grid[Y - 1][X] == empty)
 	{
 		Drop(Y - 1, X);
 	}
-	if (grid[Y + 1][X] == 0)
+	if (grid[Y + 1][X] == empty)
 	{
 		Drop(Y + 1, X);
 	}
-	if (grid[Y][X - 1] == 0)
+	if (grid[Y][X - 1] == empty)
 	{
 		Drop(Y, X - 1);
 	}
-	if (grid[Y][X + 1] == 0)
+	if (grid[Y][X + 1] == empty)
 	{
 		Drop(Y, X + 1);
 	}
@@ -71,13 +71,13 @@ void Board::Collapse()
 	{
 		for (int j = 0; j < width; j++)
 		{
-			if (grid[i][j] == -1)
+			if (grid[i][j] == hidden)
 			{
-				grid[i][j] = 0;
+				grid[i][j] = empty;
 			}
 			else
 			{
-				grid[i][j] = 1;
+				grid[i][j] = filled;
 			}
 		}
 	}
@@ -85,7 +85,7 @@ void Board::Collapse()
 
 bool Board::GameOver(int y, int x)
 {
-	if (grid[y / tileSize][x / tileSize] == 2)
+	if (grid[y / tileSize][x / tileSize] == tail)
 	{
 		return false;
 	}

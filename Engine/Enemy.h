@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics.h"
+#include "Board.h"
 
 struct Enemy
 {
@@ -15,6 +16,6 @@ struct Enemy
 		vx = 4;
 		vy = 4;
 	}
-	void Move(int(&grid)[30][40], int tileSize);
+	void Move(Board::Type(&grid)[30][40], int tileSize);
 	void Draw(Graphics& gfx, int size) const;
 };

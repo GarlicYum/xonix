@@ -51,14 +51,14 @@ void Game::UpdateModel()
 			const int y = player.GetY();
 			const int x = player.GetX();
 
-			if (brd.grid[y][x] == 2)
+			if (brd.grid[y][x] == brd.tail)
 			{
 				game = false;
 			}
 
-			if (brd.grid[y][x] == 0)
+			if (brd.grid[y][x] == brd.empty)
 			{
-				brd.grid[y][x] = 2;
+				brd.grid[y][x] = brd.tail;
 			}
 		}
 
@@ -66,7 +66,7 @@ void Game::UpdateModel()
 		
 		enemy.Move(brd.grid, tileSize);
 
-		if (brd.grid[player.GetY() ][player.GetX()] == 1)
+		if (brd.grid[player.GetY() ][player.GetX()] == brd.filled)
 		{
 			brd.Drop(enemy.y / tileSize, enemy.x / tileSize);
 			brd.Collapse();

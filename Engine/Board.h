@@ -6,6 +6,10 @@ class Board
 {
 public:
 	Board();
+	enum Type
+	{
+		empty, filled, tail, hidden
+	};
 	void Draw(Graphics& gfx) const;
 	int GetTileSize() const;
 	void Drop(int y, int x);
@@ -17,5 +21,5 @@ private:
 	static constexpr int width = 40;
 	static constexpr int height = 30;
 public:
-	int grid[height][width] = { 0 };
+	Type grid[height][width] = { empty };
 };
