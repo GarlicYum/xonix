@@ -15,6 +15,7 @@ public:
 	int GetX() const;
 	int GetY() const;
 	void Reset();
+	void Stop();
 
 private:
 	int x = 0;

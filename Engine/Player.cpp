@@ -26,29 +26,33 @@ void Player::Update()
 
 void Player::UserInput(Keyboard & kbd)
 {
+	
 	while (!kbd.KeyIsEmpty())
 	{
 		const Keyboard::Event e = kbd.ReadKey();
 
-		if (e.GetCode() == VK_UP)
+		if (!e.IsRelease())
 		{
-			vy = -1;
-			vx = 0;
-		}
-		else if (e.GetCode() == VK_DOWN)
-		{
-			vy = 1;
-			vx = 0;
-		}
-		else if (e.GetCode() == VK_LEFT)
-		{
-			vy = 0;
-			vx = -1;
-		}
-		else if (e.GetCode() == VK_RIGHT)
-		{
-			vy = 0;
-			vx = 1;
+			if (e.GetCode() == VK_UP)
+			{
+				vy = -1;
+				vx = 0;
+			}
+			else if (e.GetCode() == VK_DOWN)
+			{
+				vy = 1;
+				vx = 0;
+			}
+			else if (e.GetCode() == VK_LEFT)
+			{
+				vy = 0;
+				vx = -1;
+			}
+			else if (e.GetCode() == VK_RIGHT)
+			{
+				vy = 0;
+				vx = 1;
+			}
 		}
 	}
 }
@@ -88,6 +92,12 @@ void Player::Reset()
 {
 	x = 0;
 	y = 0;
+	vx = 0;
+	vy = 0;
+}
+
+void Player::Stop()
+{
 	vx = 0;
 	vy = 0;
 }

@@ -41,12 +41,16 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark(); // delta time
 	const int tileSize = brd.GetTileSize();
+	const int oldX = player.GetX();
+	const int oldY = player.GetY();
 
 	switch (state)
 	{
 	case playing:
 
 		counter += dt;
+
+		player.UserInput(wnd.kbd);
 
 		if (counter > delay)
 		{
@@ -65,31 +69,39 @@ void Game::UpdateModel()
 			{
 				brd.grid[y][x] = brd.tail;
 			}
-		}
 
-		player.UserInput(wnd.kbd);
+			if (brd.grid[y][x] == brd.filled && brd.grid[oldY][oldX] == brd.tail)
+			{
+				player.Stop();
+			}
+		}
 
 		for (int i = 0; i < enemyCount; i++)
 		{
 			enemy[i].Move(brd.grid, tileSize);
-			const int eX = enemy[i].GetX();
-			const int eY = enemy[i].GetY();
+		}
 
-			if (brd.grid[player.GetY()][player.GetX()] == brd.filled)
+		if (brd.grid[player.GetY()][player.GetX()] == brd.filled)
+		{	
+			for (int i = 0; i < enemyCount; i++)
 			{
-				brd.Drop(eY / tileSize, eX / tileSize);
-				brd.Collapse();
+				brd.Drop(enemy[i].GetY() / tileSize, enemy[i].GetX() / tileSize);
 			}
 
-			if (brd.LevelComplete())
-			{
-				state = newLevel;
-			}
+			brd.Collapse();
+		}
 
-			else if (brd.GameOver(eY, eX))
+		for (int i = 0; i < enemyCount; i++)
+		{
+			if (brd.GameOver(enemy[i].GetY(), enemy[i].GetX()))
 			{
 				state = gameOver;
 			}
+		}
+	
+		if (brd.LevelComplete())
+		{
+			state = newLevel;
 		}
 
 		break;
@@ -118,17 +130,14 @@ void Game::UpdateModel()
 
 		break;
 	}
-
-
-	
 }
 
 void Game::NewEnemy()
 {
 	std::uniform_int_distribution<int>xDist(100, 600);
 	std::uniform_int_distribution<int>yDist(100, 450);
-	std::uniform_int_distribution<int>xVelDist(1, 3);
-	std::uniform_int_distribution<int>yVelDist(1, 3);
+	std::uniform_int_distribution<int>xVelDist(2, 4);
+	std::uniform_int_distribution<int>yVelDist(2, 4);
 	int startX = xDist(rng);
 	int startY = yDist(rng);
 	int xVel = xVelDist(rng);
