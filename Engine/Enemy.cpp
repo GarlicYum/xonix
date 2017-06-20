@@ -19,3 +19,8 @@ void Enemy::Move(int (&grid)[30][40], int tileSize)
 		y += vy;
 	}
 }
+
+void Enemy::Draw(Graphics & gfx, int size) const
+{
+	gfx.DrawRect(x, y, size, size, Colors::White);
+}

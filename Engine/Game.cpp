@@ -42,115 +42,41 @@ void Game::UpdateModel()
 	{
 		const float dt = ft.Mark(); // delta time
 
-		for (int i = 0; i < height; i++)
-		{
-			for (int j = 0; j < width; j++)
-			{
-				if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
-				{
-					grid[i][j] = 1;
-				}
-			}
-		}
-
 		counter += dt;
 		if (counter > delay)
 		{
 			counter = 0;
 			player.Update();
 
-			if (grid[player.GetY()][player.GetX()] == 2)
+			if (brd.grid[player.GetY()][player.GetX()] == 2)
 			{
 				game = false;
 			}
 
-			if (grid[player.GetY()][player.GetX()] == 0)
+			if (brd.grid[player.GetY()][player.GetX()] == 0)
 			{
-				grid[player.GetY()][player.GetX()] = 2;
+				brd.grid[player.GetY()][player.GetX()] = 2;
 			}
 		}
 
 		player.UserInput(wnd.kbd);
 		
-		enemy.Move(grid, tileSize);
+		enemy.Move(brd.grid, brd.GetTileSize());
 
-		if (grid[player.GetY() ][player.GetX()] == 1)
+		if (brd.grid[player.GetY() ][player.GetX()] == 1)
 		{
-			Drop(enemy.y / tileSize, enemy.x / tileSize);
-
-			for (int i = 0; i < height; i++)
-			{
-				for (int j = 0; j < width; j++)
-				{
-					if (grid[i][j] == -1)
-					{
-						grid[i][j] = 0;
-					}
-					else
-					{
-						grid[i][j] = 1;
-					}
-				}
-			}
+			brd.Drop(enemy.y / brd.GetTileSize(), enemy.x / brd.GetTileSize());
+			brd.Collapse();
 		}
-		if (grid[enemy.y / tileSize][enemy.x / tileSize] == 2)
-		{
-			game = false;
-		}
-		
+		game = brd.GameOver(enemy.y, enemy.x);
 	}	
-}
-
-
-void Game::Drop(int Y, int X)
-{
-	if (grid[Y][X] == 0)
-	{
-		grid[Y][X] = -1;
-	}
-	if (grid[Y - 1][X] == 0)
-	{
-		Drop(Y - 1, X);
-	}
-	if (grid[Y + 1][X] == 0)
-	{
-		Drop(Y + 1, X);
-	}
-	if (grid[Y][X - 1] == 0)
-	{
-		Drop(Y, X - 1);
-	}
-	if (grid[Y][X + 1] == 0)
-	{
-		Drop(Y, X + 1);
-	}
 }
 
 
 void Game::ComposeFrame()
 {
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < width; j++)
-		{
-			if (grid[i][j] == 0)
-			{
-				continue;
-			}
-			else if (grid[i][j] == 1)
-			{
-				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, Colors::Green);
-			}
-			else if (grid[i][j] == 2)
-			{
-				gfx.DrawRect(j * tileSize, i * tileSize, tileSize, tileSize, Colors::Magenta);
-			}
-		}
-	}
-
-	//DrawEnemy
-	gfx.DrawRect(enemy.x, enemy.y, tileSize, tileSize, Colors::White);
-
+	const int tileSize = brd.GetTileSize();
+	brd.Draw(gfx);
+	enemy.Draw(gfx, tileSize);
 	player.Draw(gfx, tileSize);
-	
 }

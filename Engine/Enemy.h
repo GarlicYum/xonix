@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Graphics.h"
+
 struct Enemy
 {
 	int y;
@@ -14,4 +16,5 @@ struct Enemy
 		vy = 4;
 	}
 	void Move(int(&grid)[30][40], int tileSize);
+	void Draw(Graphics& gfx, int size) const;
 };

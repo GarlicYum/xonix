@@ -26,6 +26,7 @@
 #include "FrameTimer.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Board.h"
 
 class Game
 {
@@ -40,22 +41,19 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void Drop(int X, int Y);
+	
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	static constexpr int width = 40;
-	static constexpr int height = 30;
-	int grid[height][width] = { 0 };
-	static constexpr int tileSize = 20;
 	float counter = 0.0f;
 	static constexpr float delay = 0.07f;
 	FrameTimer ft;
 	bool game = true;
 	Enemy enemy;
 	Player player;
+	Board brd;
 	/********************************/
 };
