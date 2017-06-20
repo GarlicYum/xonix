@@ -52,6 +52,13 @@ void Game::UpdateModel()
 
 		player.UserInput(wnd.kbd);
 
+		//if player collides with outside enemy
+		if (Collides(tileSize))
+		{
+			failSound.Play();
+			state = gameOver;
+		}
+
 		if (counter > delay)
 		{
 			counter = 0;
@@ -59,28 +66,37 @@ void Game::UpdateModel()
 			const int y = player.GetY();
 			const int x = player.GetX();
 
+			//player dies if he collides with his tail
 			if (brd.grid[y][x] == brd.tail)
 			{
+				failSound.Play();
 				state = gameOver;
-				counter = 0;
+				counter = 0.0f;
 			}
 
+			//creates the tail
 			if (brd.grid[y][x] == brd.empty)
 			{
 				brd.grid[y][x] = brd.tail;
 			}
 
+			//player stops moving when he goes from inside to outside
 			if (brd.grid[y][x] == brd.filled && brd.grid[oldY][oldX] == brd.tail)
 			{
 				player.Stop();
 			}
 		}
 
+		//move inside enemies
 		for (int i = 0; i < enemyCount; i++)
 		{
 			enemy[i].Move(brd.grid, tileSize);
 		}
 
+		//move outside enemy
+		outEnemy.Move(brd.grid);
+		
+		
 		if (brd.grid[player.GetY()][player.GetX()] == brd.filled)
 		{	
 			for (int i = 0; i < enemyCount; i++)
@@ -91,43 +107,58 @@ void Game::UpdateModel()
 			brd.Collapse();
 		}
 
+		//player dies if enemy collides with tail
 		for (int i = 0; i < enemyCount; i++)
 		{
 			if (brd.GameOver(enemy[i].GetY(), enemy[i].GetX()))
 			{
 				state = gameOver;
+				counter = 0.0f;
+				failSound.Play();
+				break;
 			}
 		}
 	
 		if (brd.LevelComplete())
 		{
+			counter = 0.0f;
 			state = newLevel;
+			clearSound.Play();
 		}
 
 		break;
 
 	case gameOver:
-		
-		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		counter += dt;
+		if (counter > pause)
 		{
-			player.Reset();
-			brd.Reset();
-			enemy.clear();
-			NewEnemy();
-			enemyCount = 1;
-			state = playing;
+			if (wnd.kbd.KeyIsPressed(VK_RETURN))
+			{
+				player.Reset();
+				brd.Reset();
+				counter = 0.0f;
+				enemy.clear();
+				NewEnemy();
+				outEnemy.Reset();
+				enemyCount = 1;
+				state = playing;
+			}
 		}
 
 		break;
 
 	case newLevel:
-
-		player.Reset();
-		brd.Reset();
-		NewEnemy();
-		enemyCount++;
-		state = playing;
-
+		counter += dt;
+		if (counter > pause)
+		{
+			counter = 0.0f;
+			player.Reset();
+			brd.Reset();
+			NewEnemy();
+			enemyCount++;
+			outEnemy.Reset();
+			state = playing;
+		}
 		break;
 	}
 }
@@ -5167,20 +5198,55 @@ void Game::DrawGameOver(int x, int y)
 
 }
 
+bool Game::Collides(int ts)
+{
+	const int x = player.GetX();
+	const int y = player.GetY();
+	const int left = outEnemy.GetX() / ts;
+	const int right = (outEnemy.GetX() + ts) / ts;
+	const int top = outEnemy.GetY() / ts;
+	const int bottom = (outEnemy.GetY() + ts) / ts;
+
+	if (left <= (x + 1) && right >= x &&
+		top <= (y + 1) && bottom >= y)
+	{
+		return true;
+	}
+	return false;
+}
+
 
 void Game::ComposeFrame()
 {
 	const int tileSize = brd.GetTileSize();
 	brd.Draw(gfx);
 
-	for (int i = 0; i < enemyCount; i++)
+	switch (state)
 	{
-		enemy[i].Draw(gfx);
+	case gameOver:
+		if (counter > pause)
+		DrawGameOver(200, 250);
+
+		break;
+
+	case playing:
+		for (int i = 0; i < enemyCount; i++)
+		{
+			enemy[i].Draw(gfx);
+		}
+
+		player.Draw(gfx, tileSize, brd.grid);
+
+		outEnemy.Draw(gfx);
+
+		break;
 	}
 
-	player.Draw(gfx, tileSize, brd.grid);
-	if (state == gameOver)
-	{
-		DrawGameOver(200, 250);
-	}
+
+
+
+	
+	
+
+	
 }

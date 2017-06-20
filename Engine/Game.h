@@ -29,6 +29,8 @@
 #include "Board.h"
 #include <vector>
 #include <random>
+#include "OutsideEnemy.h"
+#include "Sound.h"
 
 class Game
 {
@@ -45,6 +47,7 @@ private:
 	/*  User Functions              */
 	void NewEnemy();
 	void DrawGameOver(int x, int y);
+	bool Collides(int ts);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -53,16 +56,20 @@ private:
 	/*  User Variables              */
 	float counter = 0.0f;
 	static constexpr float delay = 0.05f;
+	static constexpr float pause = 1.0f;
 	FrameTimer ft;
 	std::vector<Enemy> enemy;
 	int enemyCount = 0;
 	Player player;
 	Board brd;
+	OutsideEnemy outEnemy;
 	enum State
 	{
 		playing, gameOver, newLevel
 	};
 	State state = newLevel;
 	std::mt19937 rng;
+	Sound clearSound = L"clear.wav";
+	Sound failSound = L"fail.wav";
 	/********************************/
 };

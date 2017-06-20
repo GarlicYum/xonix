@@ -149,6 +149,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="OutsideEnemy.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sound.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="OutsideEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sound.cpp" />
   </ItemGroup>
